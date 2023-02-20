@@ -22,7 +22,7 @@ class Linear(nn.Module):
     def __init__(self, in_features: int, out_features: int) -> None:
         super(Linear, self).__init__()
         self.weights = nn.Parameter(torch.randn(in_features, out_features, requires_grad=True))
-        self.bias = nn.Parameter(torch.randn(1, out_features, requires_grad=True))
+        self.bias = nn.Parameter(torch.randn(out_features, requires_grad=True))
     def forward(self, input):
         """
             :param input: [bsz, in_features]
