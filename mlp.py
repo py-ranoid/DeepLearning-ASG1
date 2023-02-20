@@ -21,14 +21,14 @@ class Linear(nn.Module):
     """
     def __init__(self, in_features: int, out_features: int) -> None:
         super(Linear, self).__init__()
-        self.weight = nn.Parameter(torch.randn(in_features, out_features, requires_grad=True))
+        self.weight = nn.Parameter(torch.randn(out_features, in_features, requires_grad=True))
         self.bias = nn.Parameter(torch.randn(out_features, requires_grad=True))
     def forward(self, input):
         """
             :param input: [bsz, in_features]
             :return result [bsz, out_features]
         """
-        out = torch.matmul(input, self.weight) + self.bias
+        out = torch.matmul(input, self.weight.transpose(0,1)) + self.bias
         return out
 
 
