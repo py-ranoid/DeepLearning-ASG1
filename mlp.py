@@ -21,14 +21,14 @@ class Linear(nn.Module):
     """
     def __init__(self, in_features: int, out_features: int) -> None:
         super(Linear, self).__init__()
-        self.weights = nn.Parameter(torch.randn(in_features, out_features, requires_grad=True))
+        self.weight = nn.Parameter(torch.randn(in_features, out_features, requires_grad=True))
         self.bias = nn.Parameter(torch.randn(out_features, requires_grad=True))
     def forward(self, input):
         """
             :param input: [bsz, in_features]
             :return result [bsz, out_features]
         """
-        out = torch.matmul(input, self.weights) + self.bias
+        out = torch.matmul(input, self.weight) + self.bias
         return out
 
 
@@ -84,7 +84,7 @@ class MLP(torch.nn.Module):
         
     def _initialize_linear_layer(self, module: nn.Linear) -> None:
         """ For bias set to zeros. For weights set to glorot normal """
-        nn.init.xavier_normal_(module.weights)
+        nn.init.xavier_normal_(module.weight)
         module.bias.data.fill_(0)
         
     def forward(self, images: torch.Tensor) -> torch.Tensor:
