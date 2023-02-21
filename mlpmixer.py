@@ -75,10 +75,8 @@ class MixerBlock(nn.Module):
         self.mlp_channels = Mlp(dim, channels_dim, act_layer=act_layer, drop=drop)
 
     def forward(self, x):
-        print (x.shape)
         x_ = self.norm1(x).transpose(1,2)
         x_ = self.mlp_tokens.forward(x_)
-        print (x_.shape)
         x_ = torch.transpose(x_, 2, 1)
         x_post_skip1 = x_ + x
         
@@ -86,7 +84,6 @@ class MixerBlock(nn.Module):
         x_ = self.mlp_channels.forward(x_)
         
         x_post_skip2 = x_ + x_post_skip1
-        print (x_post_skip2.shape)    
         return x_post_skip2
     
 
