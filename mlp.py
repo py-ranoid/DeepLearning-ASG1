@@ -78,6 +78,7 @@ class MLP(torch.nn.Module):
         if activation == 'relu': act = nn.ReLU()
         elif activation == 'sigmoid': act = nn.Sigmoid()
         elif activation == 'softmax': act = nn.Softmax()
+        elif activation == 'tanh': act = nn.Tanh()
         else: return inputs
         return act(inputs)
         
