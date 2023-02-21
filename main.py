@@ -58,7 +58,6 @@ def evaluate(epoch, model, dataloader, args, mode="val"):
             imgs, labels = batch
             logits = model(imgs)
             loss = cross_entropy_loss(logits, labels)
-            print (loss)
             acc = compute_accuracy(logits, labels)
             epoch_accuracy += acc.item() / len(dataloader)
             epoch_loss += loss.item() / len(dataloader)
