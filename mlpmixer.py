@@ -2,6 +2,7 @@ from torch import nn
 import torch
 import math
 import matplotlib.pyplot as plt
+from matplotlib import pyplot
 import os
 
 
@@ -134,5 +135,17 @@ class MLPMixer(nn.Module):
     def visualize(self, logdir):
         """ Visualize the token mixer layer 
         in the desired directory """
-        raise NotImplementedError
+        filters = self.blocks[0].mlp_tokens.weight.cpu().detach()
+        f_min, f_max = filters.min(), filters.max()
+        filters = (filters - f_min) / (f_max - f_min)
+
+        n_filters = 20
+        fig = pyplot.figure(figsize=(30, 6))
+        for i in range(n_filters):
+            for j in range(3):
+                ax = fig.add_subplot(3, n_filters, i + n_filters*j+1)
+                ax.set_xticks([])
+                ax.set_yticks([])
+                pyplot.imshow(filters[i,j], cmap='gray')
+        pyplot.show()
  

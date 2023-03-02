@@ -7,7 +7,7 @@ Reference:
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+from matplotlib import pyplot
 
 class BasicBlock(nn.Module):
     
@@ -85,4 +85,16 @@ class ResNet18(nn.Module):
 
     def visualize(self, logdir):
         """ Visualize the kernel in the desired directory """
-        raise NotImplementedError
+        filters = self.conv1.weight.cpu().detach()
+        f_min, f_max = filters.min(), filters.max()
+        filters = (filters - f_min) / (f_max - f_min)
+
+        n_filters = 20
+        fig = pyplot.figure(figsize=(30, 6))
+        for i in range(n_filters):
+            for j in range(3):
+                ax = fig.add_subplot(3, n_filters, i + n_filters*j+1)
+                ax.set_xticks([])
+                ax.set_yticks([])
+                pyplot.imshow(filters[i,j], cmap='gray')
+        pyplot.show()
